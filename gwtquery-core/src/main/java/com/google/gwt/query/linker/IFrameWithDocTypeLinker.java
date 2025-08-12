@@ -21,37 +21,35 @@ import com.google.gwt.core.ext.TreeLogger.Type;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.linker.LinkerOrder;
 import com.google.gwt.core.ext.linker.Shardable;
-import com.google.gwt.core.linker.IFrameLinker;
+import com.google.gwt.core.linker.CrossSiteIframeLinker;
 
 /**
- * Adds doctype to the iframe used to load the application.
- * Without this code, IE8 does not enable document.querySelectorAll feature.
+ * Adds doctype to the iframe used to load the application. Without this code, IE8 does not enable document.querySelectorAll feature.
  */
 @LinkerOrder(LinkerOrder.Order.PRIMARY)
 @Shardable
-public class IFrameWithDocTypeLinker extends IFrameLinker {
+public class IFrameWithDocTypeLinker extends CrossSiteIframeLinker {
 
-  private static final String DOCTYPE = "<!doctype html>\n";
+	private static final String DOCTYPE = "<!doctype html>\n";
 
-  @Deprecated
-  protected String getModulePrefix(TreeLogger logger, LinkerContext context,
-      String strongName) throws UnableToCompleteException {
-    logger
-        .log(
-            Type.WARN,
-            "GQuery IFrameWithDocTypeLinker is deprecated, remove <add-linker name=\"stddoctype\"/> from your module file");
-    return DOCTYPE + super.getModulePrefix(logger, context, strongName);
-  }
+	@Override
+	protected String getModulePrefix(final TreeLogger logger, final LinkerContext context,
+			final String strongName) throws UnableToCompleteException {
+		logger
+				.log(
+						Type.WARN,
+						"GQuery IFrameWithDocTypeLinker is deprecated, remove <add-linker name=\"stddoctype\"/> from your module file");
+		return DOCTYPE + super.getModulePrefix(logger, context, strongName);
+	}
 
-  @Override
-  @Deprecated
-  protected String getModulePrefix(TreeLogger logger, LinkerContext context,
-      String strongName, int numFragments) throws UnableToCompleteException {
-    logger
-        .log(
-            Type.WARN,
-            "GQuery IFrameWithDocTypeLinker is deprecated, remove <add-linker name=\"stddoctype\"/> from your module file");
-    return DOCTYPE
-        + super.getModulePrefix(logger, context, strongName, numFragments);
-  }
+	@Override
+	protected String getModulePrefix(final TreeLogger logger, final LinkerContext context,
+			final String strongName, final int numFragments) throws UnableToCompleteException {
+		logger
+				.log(
+						Type.WARN,
+						"GQuery IFrameWithDocTypeLinker is deprecated, remove <add-linker name=\"stddoctype\"/> from your module file");
+		return DOCTYPE
+				+ super.getModulePrefix(logger, context, strongName, numFragments);
+	}
 }

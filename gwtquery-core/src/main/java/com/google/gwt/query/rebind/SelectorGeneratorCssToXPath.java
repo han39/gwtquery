@@ -15,6 +15,13 @@
  */
 package com.google.gwt.query.rebind;
 
+import java.util.ArrayList;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JMethod;
@@ -24,88 +31,78 @@ import com.google.gwt.query.client.impl.SelectorEngineCssToXPath.ReplaceCallback
 import com.google.gwt.query.client.impl.SelectorEngineCssToXPath.Replacer;
 import com.google.gwt.user.rebind.SourceWriter;
 
-import java.util.ArrayList;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
 /**
- * Compile time selector generator which translates selector into XPath at
- * compile time. It Uses the SelectorEngineCssToXpath to produce the xpath
- * selectors
+ * Compile time selector generator which translates selector into XPath at compile time. It Uses the SelectorEngineCssToXpath to produce the xpath selectors
  */
 public class SelectorGeneratorCssToXPath extends SelectorGeneratorBase {
 
-  /**
-   * The replacer implementation for the JVM.
-   */
-  public static final Replacer replacer = new Replacer() {
-    public String replaceAll(String s, String r, Object o) {
-      Pattern p = Pattern.compile(r);
-      if (o instanceof ReplaceCallback) {
-        final Matcher matcher = p.matcher(s);
-        ReplaceCallback callback = (ReplaceCallback) o;
-        while (matcher.find()) {
-          final MatchResult matchResult = matcher.toMatchResult();
-          ArrayList<String> argss = new ArrayList<>();
-          for (int i = 0; i < matchResult.groupCount() + 1; i++) {
-            argss.add(matchResult.group(i));
-          }
-          final String replacement = callback.foundMatch(argss);
-          s = s.substring(0, matchResult.start()) + replacement
-              + s.substring(matchResult.end());
-          matcher.reset(s);
-        }
-        return s;
-      } else {
-        return p.matcher(s).replaceAll(o.toString());
-      }
-    }
-  };
+	/**
+	 * The replacer implementation for the JVM.
+	 */
+	public static final Replacer replacer = (s, r, o) -> {
+		final Pattern p = Pattern.compile(r);
+		if (o instanceof ReplaceCallback) {
+			final Matcher matcher = p.matcher(s);
+			final ReplaceCallback callback = (ReplaceCallback) o;
+			while (matcher.find()) {
+				final MatchResult matchResult = matcher.toMatchResult();
+				final ArrayList<String> argss = new ArrayList<>();
+				for (int i = 0 ; i < matchResult.groupCount() + 1 ; i++) {
+					argss.add(matchResult.group(i));
+				}
+				final String replacement = callback.foundMatch(argss);
+				s = s.substring(0, matchResult.start()) + replacement
+						+ s.substring(matchResult.end());
+				matcher.reset(s);
+			}
+			return s;
+		} else {
+			return p.matcher(s).replaceAll(o.toString());
+		}
+	};
 
-  private SelectorEngineCssToXPath engine = new SelectorEngineCssToXPath(
-      replacer);
+	private SelectorEngineCssToXPath engine = new SelectorEngineCssToXPath(
+			replacer);
 
-  protected String css2Xpath(String s) {
-    return engine.css2Xpath(s);
-  }
+	private XPathFactory factory = XPathFactory.newInstance();
 
-  private XPathFactory factory = XPathFactory.newInstance();
-  private XPath xpath = factory.newXPath();
+	private XPath xpath = factory.newXPath();
 
-  protected void generateMethodBody(SourceWriter sw, JMethod method,
-      TreeLogger treeLogger, boolean hasContext)
-      throws UnableToCompleteException {
+	public void validateXpath(final String xselector) throws XPathExpressionException {
+		xpath.compile(xselector);
+	}
 
-    String selector = method.getAnnotation(Selector.class).value();
-    String xselector = css2Xpath(selector);
+	protected String css2Xpath(final String s) {
+		return engine.css2Xpath(s);
+	}
 
-    // Validate the generated xpath selector.
-    try {
-      validateXpath(xselector);
-    } catch (XPathExpressionException e1) {
-      System.err.println("Invalid XPath generated selector, please revise it: " + xselector);
-      if (!selector.equals(xselector)) {
-        System.err
-            .println("If your css2 selector syntax is correct, open an issue in the gwtquery project. cssselector:"
-                + selector + " xpath: " + xselector);
-      }
-      throw new UnableToCompleteException();
-    }
+	@Override
+	protected void generateMethodBody(final SourceWriter sw, final JMethod method,
+			final TreeLogger treeLogger, final boolean hasContext)
+			throws UnableToCompleteException {
 
-    sw.println("return "
-        + wrap(method, "xpathEvaluate(\"" + xselector + "\", root)") + ";");
-  }
+		final String selector = method.getAnnotation(Selector.class).value();
+		final String xselector = css2Xpath(selector);
 
-  public void validateXpath(String xselector) throws XPathExpressionException {
-    xpath.compile(xselector);
-  }
+		// Validate the generated xpath selector.
+		try {
+			validateXpath(xselector);
+		} catch (final XPathExpressionException e1) {
+			System.err.println("Invalid XPath generated selector, please revise it: " + xselector);
+			if (!selector.equals(xselector)) {
+				System.err
+						.println("If your css2 selector syntax is correct, open an issue in the gwtquery project. cssselector:"
+								+ selector + " xpath: " + xselector);
+			}
+			throw new UnableToCompleteException();
+		}
 
-  protected String getImplSuffix() {
-    return "CssToXPath" + super.getImplSuffix();
-  }
+		sw.println("return "
+				+ wrap(method, "xpathEvaluate(\"" + xselector + "\", root)") + ";");
+	}
+
+	@Override
+	protected String getImplSuffix() {
+		return "CssToXPath" + super.getImplSuffix();
+	}
 }

@@ -1,197 +1,181 @@
-<!--
-  Copyright 2011, The gwtquery team.
-
-  Licensed under the Apache License, Version 2.0 (the "License"); you may not
-  use this file except in compliance with the License. You may obtain a copy of
-  the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-  License for the specific language governing permissions and limitations under
-  the License.
--->
+<!-- Copyright 2011, The gwtquery team. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain 
+	a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed 
+	on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the 
+	License. -->
 
 <module>
-    <inherits name='com.google.gwt.user.User'/>
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name="com.google.gwt.json.JSON" />
 
-    <source path="client"/>
-    <super-source path="super"/>
+	<source path="client" />
+	<super-source path="super" />
 
-    <!-- Browser flags -->
-    <generate-with class="com.google.gwt.query.rebind.BrowserGenerator">
-        <when-type-assignable class="com.google.gwt.query.client.Browser"/>
-    </generate-with>
+	<!-- Browser flags -->
+	<generate-with class="com.google.gwt.query.rebind.BrowserGenerator">
+		<when-type-assignable class="com.google.gwt.query.client.Browser" />
+	</generate-with>
 
-    <!-- GQuery.console -->
-    <replace-with class="com.google.gwt.query.client.impl.ConsoleBrowser">
-        <when-type-assignable class="com.google.gwt.query.client.Console"/>
-    </replace-with>
+	<!-- GQuery.console -->
+	<replace-with class="com.google.gwt.query.client.impl.ConsoleBrowser">
+		<when-type-assignable class="com.google.gwt.query.client.Console" />
+	</replace-with>
 
-    <!-- JSNI Generator -->
-    <generate-with class="com.google.gwt.query.rebind.JsniBundleGenerator">
-        <when-type-assignable class="com.google.gwt.query.client.builders.JsniBundle"/>
-    </generate-with>
+	<!-- JSNI Generator -->
+	<generate-with class="com.google.gwt.query.rebind.JsniBundleGenerator">
+		<when-type-assignable class="com.google.gwt.query.client.builders.JsniBundle" />
+	</generate-with>
 
-    <!-- Json and Xml builders -->
-    <generate-with class="com.google.gwt.query.rebind.JsonBuilderGenerator">
-        <when-type-assignable class="com.google.gwt.query.client.builders.JsonBuilder"/>
-    </generate-with>
-    <generate-with class="com.google.gwt.query.rebind.JsonBuilderGenerator">
-        <when-type-assignable class="com.google.gwt.query.client.builders.JsonFactory"/>
-    </generate-with>
-    <generate-with class="com.google.gwt.query.rebind.XmlBuilderGenerator">
-        <when-type-assignable class="com.google.gwt.query.client.builders.XmlBuilder"/>
-    </generate-with>
+	<!-- Json and Xml builders -->
+	<generate-with class="com.google.gwt.query.rebind.JsonBuilderGenerator">
+		<when-type-assignable class="com.google.gwt.query.client.builders.JsonBuilder" />
+	</generate-with>
+	<generate-with class="com.google.gwt.query.rebind.JsonBuilderGenerator">
+		<when-type-assignable class="com.google.gwt.query.client.builders.JsonFactory" />
+	</generate-with>
+	<generate-with class="com.google.gwt.query.rebind.XmlBuilderGenerator">
+		<when-type-assignable class="com.google.gwt.query.client.builders.XmlBuilder" />
+	</generate-with>
 
-    <!-- Lazy Generator -->
-    <generate-with class="com.google.gwt.query.rebind.LazyGenerator">
-        <when-type-assignable class="com.google.gwt.query.client.Lazy"/>
-    </generate-with>
+	<!-- Lazy Generator -->
+	<generate-with class="com.google.gwt.query.rebind.LazyGenerator">
+		<when-type-assignable class="com.google.gwt.query.client.Lazy" />
+	</generate-with>
 
-    <!-- Selector Generators -->
-    <generate-with class="com.google.gwt.query.rebind.SelectorGeneratorJS">
-        <when-type-assignable class="com.google.gwt.query.client.Selectors"/>
-    </generate-with>
-    <generate-with class="com.google.gwt.query.rebind.SelectorGeneratorNative">
-        <when-type-assignable class="com.google.gwt.query.client.Selectors"/>
-        <any>
-            <when-property-is name="user.agent" value="gecko1_8"/>
-            <when-property-is name="user.agent" value="opera"/>
-            <when-property-is name="user.agent" value="safari"/>
-        </any>
-    </generate-with>
-    <generate-with class="com.google.gwt.query.rebind.SelectorGeneratorNativeIE8">
-        <when-type-assignable class="com.google.gwt.query.client.Selectors"/>
-        <when-property-is name="user.agent" value="ie8"/>
-    </generate-with>
-    <generate-with class="com.google.gwt.query.rebind.SelectorGeneratorNativeIE9">
-        <when-type-assignable class="com.google.gwt.query.client.Selectors"/>
-        <when-property-is name="user.agent" value="ie9"/>
-        <when-property-is name="user.agent" value="ie10"/>
-    </generate-with>
+	<!-- Selector Generators -->
+	<generate-with class="com.google.gwt.query.rebind.SelectorGeneratorJS">
+		<when-type-assignable class="com.google.gwt.query.client.Selectors" />
+	</generate-with>
+	<generate-with class="com.google.gwt.query.rebind.SelectorGeneratorNative">
+		<when-type-assignable class="com.google.gwt.query.client.Selectors" />
+		<any>
+			<when-property-is name="user.agent" value="gecko1_8" />
+			<when-property-is name="user.agent" value="opera" />
+			<when-property-is name="user.agent" value="safari" />
+		</any>
+	</generate-with>
+	<generate-with class="com.google.gwt.query.rebind.SelectorGeneratorNativeIE8">
+		<when-type-assignable class="com.google.gwt.query.client.Selectors" />
+		<when-property-is name="user.agent" value="ie8" />
+	</generate-with>
+	<generate-with class="com.google.gwt.query.rebind.SelectorGeneratorNativeIE9">
+		<when-type-assignable class="com.google.gwt.query.client.Selectors" />
+		<when-property-is name="user.agent" value="ie9" />
+		<when-property-is name="user.agent" value="ie10" />
+	</generate-with>
 
-    <!--  Document Style -->
-    <replace-with class="com.google.gwt.query.client.impl.DocumentStyleImpl">
-        <when-type-assignable class="com.google.gwt.query.client.impl.DocumentStyleImpl"/>
-    </replace-with>
-    <replace-with class="com.google.gwt.query.client.impl.DocumentStyleImplIE">
-        <when-type-assignable class="com.google.gwt.query.client.impl.DocumentStyleImpl"/>
-        <any>
-            <when-property-is name="user.agent" value="ie6"/>
-            <when-property-is name="user.agent" value="ie8"/>
-            <when-property-is name="user.agent" value="ie9"/>
-        </any>
-    </replace-with>
+	<!-- Document Style -->
+	<replace-with class="com.google.gwt.query.client.impl.DocumentStyleImpl">
+		<when-type-assignable class="com.google.gwt.query.client.impl.DocumentStyleImpl" />
+	</replace-with>
+	<replace-with class="com.google.gwt.query.client.impl.DocumentStyleImplIE">
+		<when-type-assignable class="com.google.gwt.query.client.impl.DocumentStyleImpl" />
+		<any>
+			<when-property-is name="user.agent" value="ie6" />
+			<when-property-is name="user.agent" value="ie8" />
+			<when-property-is name="user.agent" value="ie9" />
+		</any>
+	</replace-with>
 
-    <!-- Fall-back Engine for unsupported cases when using SelectorEngineImpl -->
-    <replace-with class="com.google.gwt.query.client.impl.SelectorEngineCssToXPath">
-        <when-type-assignable class="com.google.gwt.query.client.impl.HasSelector"/>
-    </replace-with>
-    <replace-with class="com.google.gwt.query.client.impl.SelectorEngineSizzleIE">
-        <when-type-assignable class="com.google.gwt.query.client.impl.HasSelector"/>
-        <any>
-            <when-property-is name="user.agent" value="ie6"/>
-            <when-property-is name="user.agent" value="ie8"/>
-            <when-property-is name="user.agent" value="ie9"/>
-            <when-property-is name="user.agent" value="ie10"/>
-        </any>
-    </replace-with>
+	<!-- Fall-back Engine for unsupported cases when using SelectorEngineImpl -->
+	<replace-with class="com.google.gwt.query.client.impl.SelectorEngineCssToXPath">
+		<when-type-assignable class="com.google.gwt.query.client.impl.HasSelector" />
+	</replace-with>
+	<replace-with class="com.google.gwt.query.client.impl.SelectorEngineSizzleIE">
+		<when-type-assignable class="com.google.gwt.query.client.impl.HasSelector" />
+		<any>
+			<when-property-is name="user.agent" value="ie6" />
+			<when-property-is name="user.agent" value="ie8" />
+			<when-property-is name="user.agent" value="ie9" />
+			<when-property-is name="user.agent" value="ie10" />
+		</any>
+	</replace-with>
 
-    <!-- Selector Engines -->
-    <replace-with class="com.google.gwt.query.client.impl.SelectorEngineSizzle">
-        <when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngineImpl"/>
-    </replace-with>
-    <replace-with class="com.google.gwt.query.client.impl.SelectorEngineSizzleIE">
-        <when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngineImpl"/>
-        <any>
-          <when-property-is name="user.agent" value="ie6"/>
-        </any>
-    </replace-with>
-    <replace-with class="com.google.gwt.query.client.impl.SelectorEngineNative">
-        <when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngineImpl"/>
-        <any>
-            <when-property-is name="user.agent" value="gecko1_8"/>
-            <when-property-is name="user.agent" value="opera"/>
-            <when-property-is name="user.agent" value="safari"/>
-            <when-property-is name="user.agent" value="ie9"/>
-            <when-property-is name="user.agent" value="ie10"/>
-        </any>
-    </replace-with>
-    <replace-with class="com.google.gwt.query.client.impl.SelectorEngineNativeIE8">
-        <when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngineImpl"/>
-        <any>
-            <when-property-is name="user.agent" value="ie8"/>
-        </any>
-    </replace-with>
+	<!-- Selector Engines -->
+	<replace-with class="com.google.gwt.query.client.impl.SelectorEngineSizzle">
+		<when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngineImpl" />
+	</replace-with>
+	<replace-with class="com.google.gwt.query.client.impl.SelectorEngineSizzleIE">
+		<when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngineImpl" />
+		<any>
+			<when-property-is name="user.agent" value="ie6" />
+		</any>
+	</replace-with>
+	<replace-with class="com.google.gwt.query.client.impl.SelectorEngineNative">
+		<when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngineImpl" />
+		<any>
+			<when-property-is name="user.agent" value="gecko1_8" />
+			<when-property-is name="user.agent" value="opera" />
+			<when-property-is name="user.agent" value="safari" />
+			<when-property-is name="user.agent" value="ie9" />
+			<when-property-is name="user.agent" value="ie10" />
+		</any>
+	</replace-with>
+	<replace-with class="com.google.gwt.query.client.impl.SelectorEngineNativeIE8">
+		<when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngineImpl" />
+		<any>
+			<when-property-is name="user.agent" value="ie8" />
+		</any>
+	</replace-with>
 
-    <!-- GQuery uses GWT.create to create the selector engine so as it can be overriden by users -->
-    <replace-with class="com.google.gwt.query.client.impl.SelectorEngine">
-        <when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngine"/>
-    </replace-with>
+	<!-- GQuery uses GWT.create to create the selector engine so as it can be overriden by users -->
+	<replace-with class="com.google.gwt.query.client.impl.SelectorEngine">
+		<when-type-assignable class="com.google.gwt.query.client.impl.SelectorEngine" />
+	</replace-with>
 
-    <!-- UI implementations -->
-    <replace-with class="com.google.gwt.query.client.plugins.UiPlugin.GQueryUiImpl">
-        <when-type-is class="com.google.gwt.query.client.plugins.UiPlugin.GQueryUiImpl" />
-    </replace-with>
-    <replace-with class="com.google.gwt.query.client.plugins.UiPlugin.GQueryUiImplTrident">
-        <when-type-is class="com.google.gwt.query.client.plugins.UiPlugin.GQueryUiImpl" />
-        <any>
-            <when-property-is name="user.agent" value="ie6" />
-            <when-property-is name="user.agent" value="ie8" />
-            <when-property-is name="user.agent" value="ie9" />
-            <when-property-is name="user.agent" value="ie10" />
-        </any>
-    </replace-with>
+	<!-- UI implementations -->
+	<replace-with class="com.google.gwt.query.client.plugins.UiPlugin.GQueryUiImpl">
+		<when-type-is class="com.google.gwt.query.client.plugins.UiPlugin.GQueryUiImpl" />
+	</replace-with>
+	<replace-with class="com.google.gwt.query.client.plugins.UiPlugin.GQueryUiImplTrident">
+		<when-type-is class="com.google.gwt.query.client.plugins.UiPlugin.GQueryUiImpl" />
+		<any>
+			<when-property-is name="user.agent" value="ie6" />
+			<when-property-is name="user.agent" value="ie8" />
+			<when-property-is name="user.agent" value="ie9" />
+			<when-property-is name="user.agent" value="ie10" />
+		</any>
+	</replace-with>
 
-    <!-- Attribute setter implementations -->
-    <replace-with class="com.google.gwt.query.client.impl.AttributeImpl">
-        <when-type-is class="com.google.gwt.query.client.impl.AttributeImpl" />
-    </replace-with>
-    <replace-with class="com.google.gwt.query.client.impl.AttributeTridentImpl">
-        <when-type-is class="com.google.gwt.query.client.impl.AttributeImpl" />
-        <when-property-is name="user.agent" value="ie6" />
-    </replace-with>
+	<!-- Attribute setter implementations -->
+	<replace-with class="com.google.gwt.query.client.impl.AttributeImpl">
+		<when-type-is class="com.google.gwt.query.client.impl.AttributeImpl" />
+	</replace-with>
+	<replace-with class="com.google.gwt.query.client.impl.AttributeTridentImpl">
+		<when-type-is class="com.google.gwt.query.client.impl.AttributeImpl" />
+		<when-property-is name="user.agent" value="ie6" />
+	</replace-with>
 
-    <!-- JsUtils implementations -->
-    <replace-with class="com.google.gwt.query.client.js.JsUtils.JsUtilsImpl">
-        <when-type-is class="com.google.gwt.query.client.js.JsUtils.JsUtilsImpl" />
-    </replace-with>
-    <replace-with class="com.google.gwt.query.client.js.JsUtils.JsUtilsImplIE6">
-        <when-type-is class="com.google.gwt.query.client.js.JsUtils.JsUtilsImpl" />
-        <when-property-is name="user.agent" value="ie6" />
-    </replace-with>
+	<!-- JsUtils implementations -->
+	<replace-with class="com.google.gwt.query.client.js.JsUtils.JsUtilsImpl">
+		<when-type-is class="com.google.gwt.query.client.js.JsUtils.JsUtilsImpl" />
+	</replace-with>
+	<replace-with class="com.google.gwt.query.client.js.JsUtils.JsUtilsImplIE6">
+		<when-type-is class="com.google.gwt.query.client.js.JsUtils.JsUtilsImpl" />
+		<when-property-is name="user.agent" value="ie6" />
+	</replace-with>
 
-    <!-- IE8 needs the iframe where the js of app is loaded set to standard in order
-         to use the queryAll native selector.
+	<!-- IE8 needs the iframe where the js of app is loaded set to standard in order to use the queryAll native selector. If your app is not using the standard linker, define it after 
+		inheriting gQuery module in your .gwt.xml file. See issue #213 -->
+	<define-linker name="stddoctype" class="com.google.gwt.query.linker.IFrameWithDocTypeLinker" />
 
-         If your app is not using the standard linker, define it after inheriting gQuery
-         module in your .gwt.xml file. See issue #213
-     -->
-    <define-linker name="stddoctype" class="com.google.gwt.query.linker.IFrameWithDocTypeLinker"/>
-
-    <!-- Let the user select type of animations to use -->
-    <define-property name="animation" values="js,transition" />
-    <set-property name="animation" value="transition" />
-    <set-property name="animation" value="js">
-        <any>
-            <when-property-is name="user.agent" value="ie6" />
-            <when-property-is name="user.agent" value="ie8" />
-            <when-property-is name="user.agent" value="ie9" />
-        </any>
-    </set-property>
-    <!-- Animations based on JS loops -->
-    <replace-with class="com.google.gwt.query.client.plugins.effects.ClipAnimation">
-        <when-type-assignable
-            class="com.google.gwt.query.client.plugins.Effects.GQAnimation" />
-        <when-property-is name="animation" value="js" />
-    </replace-with>
-    <!-- Animations based on CSS3 transitions -->
-    <replace-with class="com.google.gwt.query.client.plugins.effects.TransitionsAnimation.TransitionsClipAnimation">
-        <when-type-assignable
-            class="com.google.gwt.query.client.plugins.Effects.GQAnimation" />
-        <when-property-is name="animation" value="transition" />
-    </replace-with>
+	<!-- Let the user select type of animations to use -->
+	<define-property name="animation" values="js,transition" />
+	<set-property name="animation" value="transition" />
+	<set-property name="animation" value="js">
+		<any>
+			<when-property-is name="user.agent" value="ie6" />
+			<when-property-is name="user.agent" value="ie8" />
+			<when-property-is name="user.agent" value="ie9" />
+		</any>
+	</set-property>
+	<!-- Animations based on JS loops -->
+	<replace-with class="com.google.gwt.query.client.plugins.effects.ClipAnimation">
+		<when-type-assignable class="com.google.gwt.query.client.plugins.Effects.GQAnimation" />
+		<when-property-is name="animation" value="js" />
+	</replace-with>
+	<!-- Animations based on CSS3 transitions -->
+	<replace-with class="com.google.gwt.query.client.plugins.effects.TransitionsAnimation.TransitionsClipAnimation">
+		<when-type-assignable class="com.google.gwt.query.client.plugins.Effects.GQAnimation" />
+		<when-property-is name="animation" value="transition" />
+	</replace-with>
 </module>

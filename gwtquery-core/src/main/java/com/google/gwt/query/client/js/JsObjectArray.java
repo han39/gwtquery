@@ -24,67 +24,67 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 public final class JsObjectArray<T> extends JavaScriptObject {
 
-  public static <T> JsObjectArray<T> create() {
-    return JavaScriptObject.createArray().cast();
-  }
+	public static <T> JsObjectArray<T> create() {
+		return JavaScriptObject.createArray().cast();
+	}
 
-  protected JsObjectArray() {
-  }
+	protected JsObjectArray() {}
 
-  private JsCache c() {
-    return cast();
-  }
+	public JsObjectArray<T> add(final int i, final T val) {
+		c().put(i, val);
+		return this;
+	}
 
-  public JsObjectArray<T> add(T... vals) {
-    for (T t : vals) {
-      if (t instanceof Number) {
-        c().putNumber(length(), ((Number) t).doubleValue());
-      } else if (t instanceof Boolean) {
-        c().putBoolean(length(), (Boolean) t);
-      } else {
-        c().put(length(), t);
-      }
-    }
-    return this;
-  }
+	@SuppressWarnings("unchecked")
+	public JsObjectArray<T> add(final T... vals) {
+		for (final T t : vals) {
+			if (t instanceof Number) {
+				c().putNumber(length(), ((Number) t).doubleValue());
+			} else if (t instanceof Boolean) {
+				c().putBoolean(length(), (Boolean) t);
+			} else {
+				c().put(length(), t);
+			}
+		}
+		return this;
+	}
 
-  public JsObjectArray<T> add(int i, T val) {
-    c().put(i, val);
-    return this;
-  }
+	public void concat(final JsObjectArray<T> ary) {
+		c().concat(ary);
+	}
 
-  @SuppressWarnings("unchecked")
-  public T get(int index) {
-    return (T) c().get(index);
-  }
+	public boolean contains(final Object o) {
+		return c().contains(o);
+	}
 
-  public int length() {
-    return c().length();
-  }
+	public Object[] elements() {
+		return c().elements();
+	}
 
-  public void set(int i, T val) {
-    c().put(i, val);
-  }
+	@SuppressWarnings("unchecked")
+	public T get(final int index) {
+		return (T) c().get(index);
+	}
 
-  public void concat(JsObjectArray<T> ary) {
-    c().concat(ary);
-  }
+	public int length() {
+		return c().length();
+	}
 
-  public void pushAll(JavaScriptObject prevElem) {
-    c().pushAll(prevElem);
-  }
+	public void pushAll(final JavaScriptObject prevElem) {
+		c().pushAll(prevElem);
+	}
 
-  public boolean contains(Object o) {
-    return c().contains(o);
-  }
+	public void remove(final Object... objects) {
+		for (final Object o : objects) {
+			c().remove(o);
+		}
+	}
 
-  public void remove(Object... objects) {
-    for (Object o : objects) {
-      c().remove(o);
-    }
-  }
+	public void set(final int i, final T val) {
+		c().put(i, val);
+	}
 
-  public Object[] elements() {
-    return c().elements();
-  }
+	private JsCache c() {
+		return cast();
+	}
 }
